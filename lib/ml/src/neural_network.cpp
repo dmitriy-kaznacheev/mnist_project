@@ -134,13 +134,18 @@ NeuralNetwork::train(const std::vector<math::Matrix> &inputs,
         // обратный проход и обновление весов
         backward(inputs[indices[i]], targets[indices[i]], learning_rate);
 
-        // сравниваем предсказание с истиной меткой
-        //   targets[indices[i]] — one-hot вектор (10x1)
-        //   max_element находит индекс максимального элемента = истиный класс
-        if (predict(inputs[indices[i]]) ==
+        // предсказанный класс из текущего forward
+        int predicted = static_cast<int>(std::distance(
+            output.begin(), std::max_element(output.begin(), output.end())));
+
+        // истинный класс из one-hot вектора
+        int actual = static_cast<int>(
             std::distance(targets[indices[i]].begin(),
                           std::max_element(targets[indices[i]].begin(),
-                                           targets[indices[i]].end()))) {
+                                           targets[indices[i]].end())));
+
+        // сравниваем предсказание с истиной меткой
+        if (predicted == actual) {
           ++correct;
         }
       }
@@ -344,8 +349,7 @@ double NeuralNetwork::cross_entropy_loss(const math::Matrix &output,
     loss -= target(i, 0) * std::log(p);
   }
 
-  // нормализация на кол-во классов
-  return loss / output.rows();
+  return loss;
 }
 
 } // namespace ml

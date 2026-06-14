@@ -38,7 +38,8 @@ MNISTLoader::Dataset MNISTLoader::load_dataset(const std::string &images_path,
       for (size_t c = 0; c < cols; ++c) {
         unsigned char pixel;
         img_file.read(reinterpret_cast<char *>(&pixel), sizeof(pixel));
-        img(r * cols + c, 0) = static_cast<double>(pixel) / 255.0;
+        img(r * cols + c, 0) =
+            (static_cast<double>(pixel) / 255.0 - 0.5) * 2.0; // [-1, 1]
       }
     }
 

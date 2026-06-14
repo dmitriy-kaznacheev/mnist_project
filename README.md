@@ -108,12 +108,18 @@ cmake --build . -j$(nproc)
 
 Обучение модели:
 ```bash
-./app/console_app/mnist_console --mode train --data ../data
+./app/console_app/mnist_console train <data_dir> <model_path> [epochs] [lr]
+
+# Пример
+./app/console_app/mnist_console train ../data model.bin 20 0.0001
 ```
 
 Предсказание цифры по изображению:
 ```bash
-./app/console_app/mnist_console --mode predict --image digit.pgm
+./app/console_app/mnist_console predict <model_path> <image_path>
+
+# Пример
+./app/console_app/mnist_console predict model.bin digit.pgm
 ```
 
 ### GUI приложение
@@ -125,7 +131,7 @@ cmake --build . -j$(nproc)
 - [x] **Этап 1**: Структура проекта
 - [x] **Этап 2**: Матричная библиотека с тестами
 - [x] **Этап 3**: Библиотека нейронной сети с тестами
-- [ ] **Этап 4**: Консольное приложение
+- [x] **Этап 4**: Консольное приложение
 - [ ] **Этап 5**: Графическое приложение
 
 ## Лицензия
